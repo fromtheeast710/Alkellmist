@@ -1,0 +1,37 @@
+cabal-version:      3.0
+name:               alkellmist
+version:            0.1.0.0
+license-file:       LICENSE
+author:             east
+maintainer:         theeast710@proton.me
+category:           Cheminformatics Raylib
+build-type:         Simple
+extra-doc-files:    CHANGELOG.md
+
+common warnings
+  ghc-options: -Wall
+
+executable example-haskell-nix-flake
+  import:           warnings
+  main-is:          main.hs
+
+  build-depends:  
+    base,
+    lens,
+    random,
+    h-raylib
+    -- raw-strings-qq
+
+  hs-source-dirs: src
+
+  other-modules:
+    Setup,
+    Chemical.Atom,
+    Chemical.Bond,
+    Parser.Cli,
+    Parser.Selfies
+
+  -- test-suite test
+  --   Test
+
+  default-language: GHC2021
