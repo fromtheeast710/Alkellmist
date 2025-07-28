@@ -1,6 +1,5 @@
 module Parser.Cli (parseCli) where
 
-import Data.List
 import System.Console.GetOpt
 import System.Exit
 import System.IO
@@ -17,13 +16,11 @@ help =
   \  Usage: alkellmist [-hfi] [string] \n\
   \  Flags: \n\
   \    -h    Show this help message \n\
-  \    -f    Chemical format [Smiles/Selfies] \n\
   \    -i    Chemical input \n\\"
 
 flags :: [OptDescr Flag]
 flags =
   [ Option ['i'] ["input"] (NoArg Input) "Chemical input",
-    Option ['f'] ["format"] (NoArg Format) "Chemical format",
     Option ['h'] ["help"] (NoArg Help) help
   ]
 
@@ -35,8 +32,7 @@ parseCli argv = case getOpt Permute flags argv of
       then do
         hPutStrLn stderr (usageInfo help flags)
         exitSuccess
-      else return ([], [])
-  -- else return (nub (concatMap set args), files)
+      else return undefined
   (_, _, errs) -> do
     hPutStrLn stderr (concat errs ++ usageInfo help flags)
     exitWith (ExitFailure 1)

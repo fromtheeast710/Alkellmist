@@ -1,4 +1,4 @@
-module Chemical.Atom (atomList) where
+module Chemical.Atom (name, symbol, charge, color, radius, atomList) where
 
 import GHC.TypeLits
 

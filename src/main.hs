@@ -1,5 +1,7 @@
 import Control.Lens
 import Control.Monad
+import Parser.Cli
+import Parser.Selfies
 import Raylib.Core
 import Raylib.Core.Models
 import Raylib.Core.Text
@@ -9,10 +11,10 @@ import Raylib.Util.Colors
 import Raylib.Util.Lenses
 import Raylib.Util.Math
 import Setup
+import System.Environment
 
--- import System.Environment
--- import Cli
--- import Parser.Selfies
+drawChem :: String -> IO ()
+drawChem s = undefined
 
 drawLoop :: String -> Camera3D -> IO Camera3D
 drawLoop text cam = do
@@ -20,7 +22,7 @@ drawLoop text cam = do
   leftClick <- isMouseButtonDown MouseButtonLeft
   wheel <- getMouseWheelMove
 
-  -- NOTE: change the camera view to rotate/zoom/pan
+  -- TODO: not quite right
   f1 <-
     if rightClick
       then do
@@ -30,6 +32,7 @@ drawLoop text cam = do
   f2 <-
     if wheel /= 0
       then do
+        -- TODO: zoom and pan at the same time
         return $ _camera3D'position %~ (|+| Vector3 0 (wheel * 0.5) 0)
       else return id
   f3 <-
@@ -54,11 +57,11 @@ drawLoop text cam = do
 
 main :: IO ()
 main = do
-  -- (flag, val) <- getArgs >>= parseCli
+  (flag, val) <- getArgs >>= parseCli
 
   setConfigFlags [Msaa4xHint, WindowResizable]
 
   withWindow screenWidth screenHeight title fps $
     const $
       void $
-        whileWindowOpen (drawLoop "[C][C][C][P]") camera
+        whileWindowOpen (drawLoop $ val !! 1) camera
